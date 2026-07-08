@@ -106,9 +106,12 @@ jobs:
 
       - name: ⚙️ 设置可执行权限
         run: |
-          chmod +x airoha/build25.sh
+          chmod +x qualcommax/build25.sh
+          chmod +x qualcommax/openwrt_repositories
+          chmod +x qualcommax/immortalwrt_repositories
           chmod +x shell/prepare-packages.sh
-          chmod +x shell/apk-custom-packages.sh
+          chmod +x shell/openwrt-custom-packages.sh
+          chmod +x shell/immortalwrt-custom-packages.sh
 
       - name: 🛠️ 安装依赖
         run: |

@@ -25,7 +25,7 @@
 > 😂此固件为 **非官方构建，不保证完全无BUG** ，请知悉😂
 
 ## 😊 支持设备 [![](https://img.shields.io/badge/-支持设备-FFFFFF.svg)](#-支持设备-)
-| 品名     | 设备 |
+| 型号     | 设备 |
 |----------|------|
 | ipq807x    | aliyun_ap8220 |
 | ipq807x   | arcadyan_aw1000 |

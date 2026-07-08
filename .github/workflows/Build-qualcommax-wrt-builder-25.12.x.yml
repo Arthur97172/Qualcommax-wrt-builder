@@ -120,9 +120,26 @@ jobs:
 
       - name: ⚙️ Set custom IP config
         run: |
-          sed -i "s/版本号/${{ inputs.luci_version }}/g" files/etc/uci-defaults/99-custom.sh
+          BUILD_VER="${{ inputs.luci_version }}"
+          WRTINFORM="${{ inputs.wrt_version }}"
+          
+          # 2. 逻辑拦截：如果选的是 immortalwrt 且版本小尾数大于 0 (即 25.12.1 及以上)
+          if [ "$WRTINFORM" = "immortalwrt" ]; then
+            SUB_VER=$(echo "$BUILD_VER" | cut -d'.' -f3)
+            if [ "$SUB_VER" -gt 1 ]; then
+              echo "⚠️ 拦截提示: ImmortalWrt 暂不支持过高版本 ($BUILD_VER)，已自动修正为 25.12.0"
+              BUILD_VER="25.12.0"
+            fi
+          fi
+          
+          # 3. 核心：将安全的目标版本和分支，写入 GitHub 全局环境变量中（供后面的其他 Step 使用）
+          echo "FINAL_LUCI_VER=$BUILD_VER" >> $GITHUB_ENV
+          echo "FINAL_WRT=$WRTINFORM" >> $GITHUB_ENV  
+          
+          # 4. 替换文件：在当前 Step 内，直接用 Shell 变量 $BUILD_VER 写入文件
+          sed -i "s/版本号/$BUILD_VER/g" files/etc/uci-defaults/99-custom.sh
           sed -i "s/__IPADDR__/${{ inputs.ipaddr }}/g" files/etc/uci-defaults/99-custom.sh
-          sed -i "s/VERXXXX/${{ inputs.luci_version }}/g" files/etc/uci-defaults/99-custom.sh
+          sed -i "s/VERXXXX/$BUILD_VER/g" files/etc/uci-defaults/99-custom.sh
           echo "✅ 配置修改完成"
 
       - name: ⏬ 下载 Wrt ImageBuilder 25.12.x

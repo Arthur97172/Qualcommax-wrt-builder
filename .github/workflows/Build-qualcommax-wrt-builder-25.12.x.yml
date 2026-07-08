@@ -89,8 +89,9 @@ on:
           - 'no'
 
 env:
-  VERSION: ${{ inputs.luci_version }}
-  WRTINFORM: ${{ inputs.wrt_version }}  
+  # 判断：如果选了 immortalwrt，且版本不是 25.12.0（包含25.12.1~5），就强制降级为 25.12.0；否则保持用户选择
+  FINAL_LUCI_VER: ${{ (inputs.wrt_version == 'immortalwrt' && inputs.luci_version != '25.12.0') && '25.12.0' || inputs.luci_version }}
+  FINAL_WRT: ${{ inputs.wrt_version }}
   DOCKER: ${{ inputs.include_docker }}
 
 permissions:
@@ -120,106 +121,45 @@ jobs:
 
       - name: ⚙️ Set custom IP config
         run: |
-          BUILD_VER="${{ inputs.luci_version }}"
-          WRTINFORM="${{ inputs.wrt_version }}"
-          
-          # 2. 逻辑拦截：如果选的是 immortalwrt 且版本小尾数大于 0 (即 25.12.1 及以上)
-          if [ "$WRTINFORM" = "immortalwrt" ]; then
-            SUB_VER=$(echo "$BUILD_VER" | cut -d'.' -f3)
-            if [ "$SUB_VER" -gt 1 ]; then
-              echo "⚠️ 拦截提示: ImmortalWrt 暂不支持过高版本 ($BUILD_VER)，已自动修正为 25.12.0"
-              BUILD_VER="25.12.0"
-            fi
-          fi
-          
-          # 3. 核心：将安全的目标版本和分支，写入 GitHub 全局环境变量中（供后面的其他 Step 使用）
-          echo "FINAL_LUCI_VER=$BUILD_VER" >> $GITHUB_ENV
-          echo "FINAL_WRT=$WRTINFORM" >> $GITHUB_ENV  
-          
-          # 4. 替换文件：在当前 Step 内，直接用 Shell 变量 $BUILD_VER 写入文件
-          sed -i "s/版本号/$BUILD_VER/g" files/etc/uci-defaults/99-custom.sh
+          sed -i "s/版本号/${{ env.FINAL_LUCI_VER }}/g" files/etc/uci-defaults/99-custom.sh
           sed -i "s/__IPADDR__/${{ inputs.ipaddr }}/g" files/etc/uci-defaults/99-custom.sh
-          sed -i "s/VERXXXX/$BUILD_VER/g" files/etc/uci-defaults/99-custom.sh
+          sed -i "s/VERXXXX/${{ env.FINAL_LUCI_VER }}/g" files/etc/uci-defaults/99-custom.sh
           echo "✅ 配置修改完成"
 
       - name: ⏬ 下载 Wrt ImageBuilder 25.12.x
         run: |
-          BUILD_VER="${{ inputs.luci_version }}"
-          WRTINFORM="${{ inputs.wrt_version }}"
-          
-          # 2. 逻辑拦截：如果选的是 immortalwrt 且版本小尾数大于 0 (即 25.12.1 及以上)
-          if [ "$WRTINFORM" = "immortalwrt" ]; then
-            SUB_VER=$(echo "$BUILD_VER" | cut -d'.' -f3)
-            if [ "$SUB_VER" -gt 1 ]; then
-              echo "⚠️ 拦截提示: ImmortalWrt 暂不支持过高版本 ($LUCI_VER)，已自动修正为 25.12.0"
-              BUILD_VER="25.12.0"
-            fi
-          fi
-          
-          # 3. 核心：将安全的目标版本和分支，写入 GitHub 全局环境变量中
-          echo "FINAL_LUCI_VER=$LUCI_VER" >> $GITHUB_ENV
-          echo "FINAL_WRT=$WRTINFORM" >> $GITHUB_ENV  
-          
-          URL="https://downloads.${WRTINFORM}.org/releases/${BUILD_VER}/targets/qualcommax/ipq807x/${WRTINFORM}-imagebuilder-${BUILD_VER}-qualcommax-ipq807x.Linux-x86_64.tar.zst"
+          URL="https://downloads.${{ env.FINAL_WRT }}.org/releases/${{ env.FINAL_LUCI_VER }}/targets/qualcommax/ipq807x/${{ env.FINAL_WRT }}-imagebuilder-${{ env.FINAL_LUCI_VER }}-qualcommax-ipq807x.Linux-x86_64.tar.zst"
           curl -Lf -o imagebuilder.tar.zst "$URL"
           tar --use-compress-program=unzstd -xvf imagebuilder.tar.zst
-          mv ${WRTINFORM}-imagebuilder-* imagebuilder
+          mv -- ${{ env.FINAL_WRT }}-imagebuilder-* imagebuilder
 
       - name: 🔄 复制必备文件
-        run: |
-          WRTINFORM="${{ inputs.wrt_version }}"
-          BUILD_VER="${{ inputs.luci_version }}"        
+        run: |   
           cp qualcommax/build25.sh imagebuilder/
           
-          # 根据 WRTINFORM 的值判断复制哪个软件源文件
-          if [ "$WRTINFORM" = "openwrt" ]; then
+          if [ "${{ env.FINAL_WRT }}" = "openwrt" ]; then
             cp qualcommax/openwrt_repositories imagebuilder/repositories
-          elif [ "$WRTINFORM" = "immortalwrt" ]; then
-            cp qualcommax/immortalwrt_repositories imagebuilder/repositories
+            cp shell/immortalwrt-custom-packages.sh imagebuilder/
           else
-            echo "⚠️ 未知的 WRTINFORM 版本: $WRTINFORM，未复制软件源文件。"
+            cp qualcommax/immortalwrt_repositories imagebuilder/repositories
+            cp shell/openwrt-custom-packages.sh imagebuilder/
           fi
           
           cp shell/prepare-packages.sh imagebuilder/
-          # 根据 WRTINFORM 的值判断复制哪个软件源文件
-          if [ "$WRTINFORM" = "openwrt" ]; then
-            cp shell/immortalwrt-custom-packages.sh imagebuilder/
-          elif [ "$WRTINFORM" = "immortalwrt" ]; then
-            cp shell/openwrt-custom-packages.sh imagebuilder/
-          else
-            echo "⚠️ 未知的 WRTINFORM 版本: $WRTINFORM，未复制软件源文件。"
-          fi          
           mkdir -p imagebuilder/files/etc/uci-defaults imagebuilder/files/etc/apk/repositories.d
           cp files/etc/uci-defaults/99-custom.sh imagebuilder/files/etc/uci-defaults/
-          # 追加自定义源到 APK repositories（FIRMWARE 内 /etc/apk/repositories 会用这个）
           cat files/customfeeds/25.customfeeds.list >> imagebuilder/files/etc/apk/repositories.d/customfeeds.list
           echo "✅ 文件准备完成"
 
       - name: ⚙️ 动态获取 Kmod 哈希并更新配置
-        run: |
-          BUILD_VER="${{ inputs.luci_version }}"
-          WRTINFORM="${{ inputs.wrt_version }}"
-          # 2. 逻辑拦截：如果选的是 immortalwrt 且版本小尾数大于 0 (即 25.12.1 及以上)
-          if [ "$WRTINFORM" = "immortalwrt" ]; then
-            SUB_VER=$(echo "$BUILD_VER" | cut -d'.' -f3)
-            if [ "$SUB_VER" -gt 1 ]; then
-              echo "⚠️ 拦截提示: ImmortalWrt 暂不支持过高版本 ($LUCI_VER)，已自动修正为 25.12.0"
-              BUILD_VER="25.12.0"
-            fi
-          fi
-          
-          # 3. 核心：将安全的目标版本和分支，写入 GitHub 全局环境变量中
-          echo "FINAL_LUCI_VER=$LUCI_VER" >> $GITHUB_ENV
-          echo "FINAL_WRT=$WRTINFORM" >> $GITHUB_ENV  
-          
-          BASE_URL="https://downloads.${WRTINFORM}.org/releases/${BUILD_VER}/targets/qualcommax/ipq807x/kmods/"          
+        run: |         
+          BASE_URL="https://downloads.${{ env.FINAL_WRT }}.org/releases/${{ env.FINAL_LUCI_VER }}/targets/qualcommax/ipq807x/kmods/"          
           echo "正在从 $BASE_URL 获取最新的内核哈希..."
           KMOD_DIR=$(curl -sL $BASE_URL | grep -oE "[0-9.-]+-[a-f0-9]{32}" | head -n 1)
           if [ -n "$KMOD_DIR" ]; then
             FULL_KMOD_URL="${BASE_URL}${KMOD_DIR}/packages.adb"
             echo "✅ 成功匹配 kmods 路径: $FULL_KMOD_URL"
-            # 替换 repositories 文件中的占位符
-            sed -i "s|VERSION_PLACEHOLDER|${BUILD_VER}|g" imagebuilder/repositories
+            sed -i "s|VERSION_PLACEHOLDER|${{ env.FINAL_LUCI_VER }}|g" imagebuilder/repositories
             sed -i "s|KMOD_PLACEHOLDER|${FULL_KMOD_URL}|g" imagebuilder/repositories
           else
             echo "❌ 无法获取 Kmod 哈希"
@@ -237,10 +177,9 @@ jobs:
 
       - name: 📜 生成发布说明
         run: |
-          WRTINFORM="${{ inputs.wrt_version }}"
           cat > ${{ github.workspace }}/router-info.md <<EOF
           ## 📡 路由器后台信息
-          📌 版本： ${WRTINFORM}-${{ inputs.luci_version }}
+          📌 版本： ${{ env.FINAL_WRT }}-${{ env.FINAL_LUCI_VER }}
           🏠 后台地址： ${{ inputs.ipaddr }}
           👤 用户名： root
           🔑 密码： 无
@@ -250,10 +189,10 @@ jobs:
       - name: 🚀 上传到 Release
         uses: softprops/action-gh-release@v2.2.1
         with:
-          tag_name: ${{ inputs.wrt_version }}-${{ inputs.luci_version }}-qualcommax-ipq807x-RELEASE-Docker-${{ inputs.include_docker }}
+          tag_name: ${{ env.FINAL_WRT }}-${{ env.FINAL_LUCI_VER }}-qualcommax-ipq807x-RELEASE-Docker-${{ inputs.include_docker }}
           body_path: ${{ github.workspace }}/router-info.md
           files: |
             imagebuilder/bin/targets/qualcommax/ipq807x/*squashfs-sysupgrade.*
+            imagebuilder/bin/targets/qualcommax/ipq807x/*squashfs-factory.*
+            imagebuilder/bin/targets/qualcommax/ipq807x/*initramfs-uImage.*
           token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

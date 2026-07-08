@@ -18,7 +18,7 @@
   </div>
   
 ## 🤔 项目介绍 [![](https://img.shields.io/badge/-项目介绍-FFFFFF.svg)](#-项目介绍-)
-**目标是提供一个纯净的ImmortalWrt系统，支持24.10.x和25.12.x版本编译，并可选择是否包含Docker。**
+**目标是提供一个纯净的ImmortalWrt and Openwrt系统，支持25.12.x版本编译，并可选择是否包含Docker。**
 ***编译快速，基本上5分钟就可以完成编译工作。***
 
 > [!TIP]
@@ -27,10 +27,41 @@
 ## 😊 支持设备 [![](https://img.shields.io/badge/-支持设备-FFFFFF.svg)](#-支持设备-)
 | 品名     | 设备 |
 |----------|------|
-| 9tripod    | 9tripod_x3568-v4 |
-| ariaboard    | ariaboard_photonicat |
-| armsom    | armsom_sige3, armsom_sige7 |
-| cyber   | cyber_cyber3588-aib |
+| ipq807x    | aliyun_ap8220 |
+| ipq807x   | arcadyan_aw1000 |
+| ipq807x   | asus_rt-ax89x |
+| ipq807x   | buffalo_wxr-5950ax12 |
+| ipq807x    | cmcc_rm2-6 |
+| ipq807x   | compex_wpq873 |
+| ipq807x   | asus_rt-ax89x |
+| ipq807x   | dynalink_dl-wrx36 |
+| ipq807x    | edgecore_eap102 |
+| ipq807x   | bedimax_cax1800 |
+| ipq807x   | linksys_homewrk |
+| ipq807x   | linksys_mx4200v1 |
+| ipq807x    | linksys_mx4200v2 |
+| ipq807x   | linksys_mx4300 |
+| ipq807x   | linksys_mx5300 |
+| ipq807x   | linksys_mx8300 |
+| ipq807x    | netgear_rax120v2 |
+| ipq807x   | netgear_sxr80 |
+| ipq807x   | netgear_wax218 |
+| ipq807x   | netgear_wax620 |
+| ipq807x   | netgear_wax630 |
+| ipq807x   | prpl_haze |
+| ipq807x   | qnap_301w |
+| ipq807x   | redmi_ax6 |
+| ipq807x   | spectrum_sax1v1k |
+| ipq807x   | tplink_deco-x80-5g |
+| ipq807x   | tplink_eap620hd-v1 |
+| ipq807x   | tplink_eap660hd-v1|
+| ipq807x   | xiaomi_ax3600 |
+| ipq807x   | xiaomi_ax9000 |
+| ipq807x   | yuncore_ax880 |
+| ipq807x   | zbtlink_zbt-z800ax |
+| ipq807x   | zte_mf269  |
+| ipq807x   | zyxel_nbg7815 |
+| ipq807x   | zyxel_nwa210ax |
 
 
 ## 😅 第三方插件 [![](https://img.shields.io/badge/-第三方插件-FFFFFF.svg)](#-第三方插件-)

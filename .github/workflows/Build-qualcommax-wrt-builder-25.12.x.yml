@@ -140,10 +140,10 @@ jobs:
           
           if [ "${{ env.FINAL_WRT }}" = "openwrt" ]; then
             cp qualcommax/openwrt_repositories imagebuilder/repositories
-            cp shell/immortalwrt-custom-packages.sh imagebuilder/
+            cp shell/openwrt-custom-packages.sh imagebuilder/
           else
             cp qualcommax/immortalwrt_repositories imagebuilder/repositories
-            cp shell/openwrt-custom-packages.sh imagebuilder/
+            cp shell/immortalwrt-custom-packages.sh imagebuilder/
           fi
           
           cp shell/prepare-packages.sh imagebuilder/

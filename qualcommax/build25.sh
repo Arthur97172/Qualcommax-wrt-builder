@@ -31,7 +31,8 @@ PACKAGES=""
 # [核心系统 - 不含 libc/libgcc,由 base 系统提供]
 PACKAGES="$PACKAGES base-files uci ubus dropbear logd mtd bash htop curl wget ca-bundle ca-certificates"
 PACKAGES="$PACKAGES dnsmasq-full firewall4 nftables kmod-nft-offload"
-PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe wpad-openssl"
+# 显式地加上 -wpad-basic-mbedtls，把它从系统默认包里删掉
+PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe -wpad-basic-mbedtls wpad-openssl"
 
 # [硬件驱动]
 PACKAGES="$PACKAGES -kmod-ath10k-sdio kmod-ath10k"

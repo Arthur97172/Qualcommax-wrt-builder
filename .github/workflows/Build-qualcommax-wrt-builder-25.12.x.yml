@@ -182,6 +182,19 @@ jobs:
         run: |
           BUILD_VER="${{ inputs.luci_version }}"
           WRTINFORM="${{ inputs.wrt_version }}"
+          # 2. 逻辑拦截：如果选的是 immortalwrt 且版本小尾数大于 0 (即 25.12.1 及以上)
+          if [ "$WRTINFORM" = "immortalwrt" ]; then
+            SUB_VER=$(echo "$BUILD_VER" | cut -d'.' -f3)
+            if [ "$SUB_VER" -gt 1 ]; then
+              echo "⚠️ 拦截提示: ImmortalWrt 暂不支持过高版本 ($LUCI_VER)，已自动修正为 25.12.0"
+              BUILD_VER="25.12.0"
+            fi
+          fi
+          
+          # 3. 核心：将安全的目标版本和分支，写入 GitHub 全局环境变量中
+          echo "FINAL_LUCI_VER=$LUCI_VER" >> $GITHUB_ENV
+          echo "FINAL_WRT=$WRTINFORM" >> $GITHUB_ENV  
+          
           BASE_URL="https://downloads.${WRTINFORM}.org/releases/${BUILD_VER}/targets/qualcommax/ipq807x/kmods/"          
           echo "正在从 $BASE_URL 获取最新的内核哈希..."
           KMOD_DIR=$(curl -sL $BASE_URL | grep -oE "[0-9.-]+-[a-f0-9]{32}" | head -n 1)

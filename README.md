@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./files/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 
-  <h1>基于ImmortalWrt and Openwrt Qualcommax-ipq807x-wrt-builder</h1>
+  <h1>基于ImmortalWrt and Openwrt Qualcommax-ipq807x</h1>
 
   <img src="https://img.shields.io/github/downloads/Arthur97172/Qualcommax-wrt-builder/total.svg?style=for-the-badge&color=32C955"/>
   <img src="https://img.shields.io/github/stars/Arthur97172/Qualcommax-wrt-builder.svg?style=for-the-badge&color=orange"/>

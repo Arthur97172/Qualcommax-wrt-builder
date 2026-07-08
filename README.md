@@ -27,11 +27,11 @@
 ## 😊 支持设备 [![](https://img.shields.io/badge/-支持设备-FFFFFF.svg)](#-支持设备-)
 | 型号     | 设备 |
 |----------|------|
-| ipq807x    | aliyun_ap8220 |
-| ipq807x   | arcadyan_aw1000 |
-| ipq807x   | asus_rt-ax89x |
-| ipq807x   | buffalo_wxr-5950ax12 |
-| ipq807x    | cmcc_rm2-6 |
+| Aliyun    | aliyun_ap8220 |
+| Arcadyan   | arcadyan_aw1000 |
+| Asus   | asus_rt-ax89x |
+| Buffalo   | buffalo_wxr-5950ax12 |
+| Cmcc   | cmcc_rm2-6 |
 | ipq807x   | compex_wpq873 |
 | ipq807x   | asus_rt-ax89x |
 | ipq807x   | dynalink_dl-wrx36 |

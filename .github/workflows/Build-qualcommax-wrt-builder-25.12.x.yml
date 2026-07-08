@@ -122,9 +122,9 @@ jobs:
 
       - name: ⚙️ Set custom IP config
         run: |
-          sed -i "s/版本号/${{ env.FINAL_LUCI_VER }}/g" files/uci-defaults/99-custom.sh
-          sed -i "s/__IPADDR__/${{ inputs.ipaddr }}/g" files/uci-defaults/99-custom.sh
-          sed -i "s/VERXXXX/${{ env.FINAL_LUCI_VER }}/g" files/uci-defaults/99-custom.sh
+          sed -i "s/版本号/${{ env.FINAL_LUCI_VER }}/g" files/etc/uci-defaults/99-custom.sh
+          sed -i "s/__IPADDR__/${{ inputs.ipaddr }}/g" files/etc/uci-defaults/99-custom.sh
+          sed -i "s/VERXXXX/${{ env.FINAL_LUCI_VER }}/g" files/etc/uci-defaults/99-custom.sh
           echo "✅ 配置修改完成"
 
       - name: ⏬ 下载 Wrt ImageBuilder 25.12.x

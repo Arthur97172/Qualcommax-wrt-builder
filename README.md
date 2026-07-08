@@ -25,43 +25,29 @@
 > 😂此固件为 **非官方构建，不保证完全无BUG** ，请知悉😂
 
 ## 😊 支持设备 [![](https://img.shields.io/badge/-支持设备-FFFFFF.svg)](#-支持设备-)
-| 型号     | 设备 |
+| 品牌     | 设备型号 |
 |----------|------|
 | Aliyun    | aliyun_ap8220 |
 | Arcadyan   | arcadyan_aw1000 |
 | Asus   | asus_rt-ax89x |
 | Buffalo   | buffalo_wxr-5950ax12 |
 | Cmcc   | cmcc_rm2-6 |
-| ipq807x   | compex_wpq873 |
-| ipq807x   | asus_rt-ax89x |
-| ipq807x   | dynalink_dl-wrx36 |
-| ipq807x    | edgecore_eap102 |
-| ipq807x   | bedimax_cax1800 |
-| ipq807x   | linksys_homewrk |
-| ipq807x   | linksys_mx4200v1 |
-| ipq807x    | linksys_mx4200v2 |
-| ipq807x   | linksys_mx4300 |
-| ipq807x   | linksys_mx5300 |
-| ipq807x   | linksys_mx8300 |
-| ipq807x    | netgear_rax120v2 |
-| ipq807x   | netgear_sxr80 |
-| ipq807x   | netgear_wax218 |
-| ipq807x   | netgear_wax620 |
-| ipq807x   | netgear_wax630 |
-| ipq807x   | prpl_haze |
-| ipq807x   | qnap_301w |
-| ipq807x   | redmi_ax6 |
-| ipq807x   | spectrum_sax1v1k |
-| ipq807x   | tplink_deco-x80-5g |
-| ipq807x   | tplink_eap620hd-v1 |
-| ipq807x   | tplink_eap660hd-v1|
-| ipq807x   | xiaomi_ax3600 |
-| ipq807x   | xiaomi_ax9000 |
-| ipq807x   | yuncore_ax880 |
-| ipq807x   | zbtlink_zbt-z800ax |
-| ipq807x   | zte_mf269  |
-| ipq807x   | zyxel_nbg7815 |
-| ipq807x   | zyxel_nwa210ax |
+| Compex   | compex_wpq873 |
+| Dynalink_dl   | dynalink_dl-wrx36 |
+| Edgecore    | edgecore_eap102 |
+| Bedimax   | bedimax_cax1800 |
+| Linksys   | linksys_homewrk, linksys_mx4200v1, linksys_mx4200v2, linksys_mx4300, linksys_mx5300, linksys_mx8300 |
+| Netgear    | netgear_rax120v2, netgear_sxr80, netgear_wax218, netgear_wax620, netgear_wax630 |
+| Prpl   | prpl_haze |
+| Qnap   | qnap_301w |
+| Redmi   | redmi_ax6 |
+| Spectrum   | spectrum_sax1v1k |
+| Tplink   | tplink_deco-x80-5g, tplink_eap620hd-v1, tplink_eap660hd-v1 |
+| Xiaomi   | xiaomi_ax3600, xiaomi_ax9000 |
+| Yuncore   | yuncore_ax880 |
+| Zbtlink   | zbtlink_zbt-z800ax |
+| Zte   | zte_mf269  |
+| Zyxel   | zyxel_nbg7815, zyxel_nwa210ax |
 
 
 </div>

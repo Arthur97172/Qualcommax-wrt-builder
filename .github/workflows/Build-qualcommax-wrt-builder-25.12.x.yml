@@ -195,5 +195,4 @@ jobs:
           files: |
             imagebuilder/bin/targets/qualcommax/ipq807x/*squashfs-sysupgrade.*
             imagebuilder/bin/targets/qualcommax/ipq807x/*squashfs-factory.*
-            imagebuilder/bin/targets/qualcommax/ipq807x/*initramfs-uImage.*
           token: ${{ secrets.GITHUB_TOKEN }}

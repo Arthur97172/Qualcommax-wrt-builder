@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./files/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 
-  <h1>基于ImmortalWrt Imagebuilder rockchip-armv8</h1>
+  <h1>基于ImmortalWrt and Openwrt Qualcommax-wrt-builder</h1>
 
   <img src="https://img.shields.io/github/downloads/Arthur97172/Immortalwrt-rockchip/total.svg?style=for-the-badge&color=32C955"/>
   <img src="https://img.shields.io/github/stars/Arthur97172/Immortalwrt-rockchip.svg?style=for-the-badge&color=orange"/>

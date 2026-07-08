@@ -32,11 +32,10 @@ PACKAGES=""
 PACKAGES="$PACKAGES base-files uci ubus dropbear logd mtd bash htop curl wget ca-bundle ca-certificates"
 PACKAGES="$PACKAGES dnsmasq-full firewall4 nftables kmod-nft-offload"
 PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe wpad-openssl"
-PACKAGES="$PACKAGES kmod-xdp-sockets-diag"
 
 # [硬件驱动]
 PACKAGES="$PACKAGES -kmod-ath10k-sdio kmod-ath10k"
-PACKAGES="$PACKAGES kmod-ata-ahci kmod-ata-ahci-dwc kmod-mmc kmod-r8125 kmod-r8168 kmod-r8169 r8169-firmware"
+PACKAGES="$PACKAGES kmod-ata-ahci kmod-mmc kmod-r8125 kmod-r8168 kmod-r8169 r8169-firmware"
 
 # [磁盘与文件系统]
 PACKAGES="$PACKAGES block-mount fdisk lsblk blkid parted resize2fs smartmontools"

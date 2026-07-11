@@ -62,20 +62,13 @@ elif [ "$count" -gt 1 ]; then
         uci -q delete "network.$section.ports"
         for port in $lan_ifnames; do uci add_list "network.$section.ports"="$port"; done
     fi
-
-    # PPPoE 逻辑
-    if [ "$enable_pppoe" = "yes" ]; then
-        uci set network.wan.proto='pppoe'
-        uci set network.wan.username="$pppoe_account"
-        uci set network.wan.password="$pppoe_password"
-    fi
 fi
 
 # 4. LAN 静态 IP 设置 (此段会被 Workflow 的 sed 匹配并修改)
 # 注意：如果是单网口且用户在 Action 选了 DHCP，Workflow 会删掉下面这两行并把 proto 改为 dhcp
 uci set network.lan.proto='static'
 uci set network.lan.netmask='255.255.255.0'
-uci set network.lan.ipaddr='192.168.10.1'
+uci set network.lan.ipaddr='__IPADDR__'
 
 # 权限与服务
 uci delete ttyd.@ttyd[0].interface

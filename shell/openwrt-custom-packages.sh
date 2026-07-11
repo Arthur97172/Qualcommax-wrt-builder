@@ -5,6 +5,9 @@
 #晶晨宝盒 (amlogic)
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-amlogic luci-i18n-amlogic-zh-cn"
 
+# material (material)
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-theme-material"
+
 # argon主题 (argon)
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-theme-argon"
 

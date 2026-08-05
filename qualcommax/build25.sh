@@ -69,12 +69,6 @@ PACKAGES="$PACKAGES luci-app-wol luci-i18n-wol-zh-cn"
 PACKAGES="$PACKAGES luci-app-ddns luci-i18n-ddns-zh-cn"
 PACKAGES="$PACKAGES luci-app-package-manager luci-i18n-package-manager-zh-cn"
 
-# Docker 插件
-if [ "$INCLUDE_DOCKER" = "yes" ]; then
-    echo "🐳 Docker enabled, adding docker packages"
-    PACKAGES="$PACKAGES docker docker-compose luci-app-dockerman luci-i18n-dockerman-zh-cn"
-fi
-
 # ============================================
 # 步骤2: 处理第三方插件(最佳努力,失败不阻断构建)
 # ============================================

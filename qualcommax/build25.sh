@@ -34,7 +34,10 @@ PACKAGES="$PACKAGES dnsmasq-full firewall4 nftables kmod-nft-offload"
 PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe -wpad-basic-mbedtls wpad-openssl libustream-openssl"
 
 # [硬件驱动]
-PACKAGES="$PACKAGES -kmod-ath10k-sdio kmod-ath10k"
+# 彻底移除老旧的 802.11ac (ath10k) 驱动
+PACKAGES="$PACKAGES -kmod-ath10k -kmod-ath10k-ct -kmod-ath10k-sdio"
+# 引入基于 PCIe 总线的 ath11k 驱动与对应网卡固件 (以 QCN9074 为例)
+PACKAGES="$PACKAGES kmod-ath11k kmod-ath11k-pci ath11k-firmware-qcn9074"
 PACKAGES="$PACKAGES kmod-ata-ahci kmod-mmc kmod-r8125 kmod-r8168 kmod-r8169 r8169-firmware"
 
 # [磁盘与文件系统]

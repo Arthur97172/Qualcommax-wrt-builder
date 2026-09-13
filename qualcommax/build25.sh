@@ -32,7 +32,8 @@ PACKAGES="$PACKAGES base-files uci ubus dropbear logd mtd bash htop curl wget ca
 PACKAGES="$PACKAGES -dnsmasq dnsmasq-full firewall4 nftables kmod-nft-offload nano"
 PACKAGES="$PACKAGES -odhcpd odhcpd-ipv6only odhcp6c"
 # 显式地加上 -wpad-basic-mbedtls，把它从系统默认包里删掉
-PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe -wpad-basic-mbedtls wpad-openssl libustream-openssl luci-proto-ppp luci-proto-ipv6"
+PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe -wpad-basic-mbedtls -wpad-mbedtls -wpad-openssl wpad-mesh-openssl luci-proto-ppp luci-proto-ipv6"
+PACKAGES="$PACKAGES -libustream-mbedtls -libustream-wolfssl libustream-openssl"
 PACKAGES="$PACKAGES kmod-tcp-bbr"
 
 # [硬件驱动]

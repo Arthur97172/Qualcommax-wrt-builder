@@ -36,6 +36,7 @@ PACKAGES="$PACKAGES ip-full ipset iw ppp ppp-mod-pppoe -wpad-basic-mbedtls -wpad
 PACKAGES="$PACKAGES -libustream-mbedtls -libustream-wolfssl libustream-openssl"
 PACKAGES="$PACKAGES kmod-tcp-bbr"
 PACKAGES="$PACKAGES tmux"
+PACKAGES="$PACKAGES uhttpd luci-app-uhttpd"
 
 # [硬件驱动]
 # 彻底移除老旧的 802.11ac (ath10k) 驱动
